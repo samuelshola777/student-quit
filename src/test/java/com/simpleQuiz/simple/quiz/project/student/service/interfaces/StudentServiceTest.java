@@ -1,16 +1,19 @@
 package com.simpleQuiz.simple.quiz.project.student.service.interfaces;
 
-import com.simpleQuiz.simple.quiz.project.student.DTO.StudentRequest;
+import com.simpleQuiz.simple.quiz.project.student.DTO.request.StudentRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@RequiredArgsConstructor
+
 class StudentServiceTest {
-    private final StudentService studentService;
+    @Autowired
+    private  StudentService studentService;
 
 private StudentRequest studentRequest1;
 private StudentRequest studentRequest2;
@@ -46,4 +49,16 @@ private StudentRequest studentRequest4;
 
 
     }
+
+    @Test
+    void  testStudentCanRegister(){
+
+    assertDoesNotThrow(()->{
+        assertNotNull(studentService.registerNewStudent(studentRequest1));
+        assertNotNull(studentService.registerNewStudent(studentRequest2));
+        assertNotNull(studentService.registerNewStudent(studentRequest3));
+        assertNotNull(studentService.registerNewStudent(studentRequest4));
+    });
+    }
+
 }

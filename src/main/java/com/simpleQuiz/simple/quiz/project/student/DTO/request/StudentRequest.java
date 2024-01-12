@@ -1,4 +1,4 @@
-package com.simpleQuiz.simple.quiz.project.student.DTO;
+package com.simpleQuiz.simple.quiz.project.student.DTO.request;
 
 import com.simpleQuiz.simple.quiz.project.student.data.model.StudentClass;
 import jakarta.persistence.EnumType;
