@@ -24,7 +24,6 @@ public class QuizResult {
     @Enumerated(EnumType.STRING)
     private List<JS1Questions> listOfWrongQuestions = new ArrayList<>();
     private boolean submitted;
-
     @ElementCollection(targetClass = JS1Questions.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "quiz_question_asked", joinColumns = @JoinColumn(name = "quiz_result_id"))
     @Enumerated(EnumType.STRING)
