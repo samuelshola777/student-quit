@@ -14,6 +14,7 @@ private  QuizService quizService;
     private TakeQuizRequest takeQuizRequest;
     @BeforeEach
     void setUp() {
+        takeQuizRequest = new TakeQuizRequest();
         takeQuizRequest.setQuizResultId(1);
         takeQuizRequest.setAnswer("");
         takeQuizRequest.setStudentId(2);
@@ -23,7 +24,7 @@ private  QuizService quizService;
     @Test
     void testThatStudentCanTakeQuiz(){
    String question =  quizService.setQuizQuestion(takeQuizRequest.getStudentId());
-
+    assertEquals("tcttbyhvy", question);
 
     }
 }

@@ -1,4 +1,5 @@
 package com.simpleQuiz.simple.quiz.project.quiz.data.model;
+import com.simpleQuiz.simple.quiz.project.quiz.data.model.js1QuizZ.JS1Questions;
 import com.simpleQuiz.simple.quiz.project.student.data.model.Student;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,7 +26,7 @@ public class QuizResult {
     private boolean submitted;
 
     @ElementCollection(targetClass = JS1Questions.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "quiz_wrong_question", joinColumns = @JoinColumn(name = "quiz_result_id"))
+    @CollectionTable(name = "quiz_question_asked", joinColumns = @JoinColumn(name = "quiz_result_id"))
     @Enumerated(EnumType.STRING)
     private List<JS1Questions> listOfQuestionsAsked = new ArrayList<>();
 

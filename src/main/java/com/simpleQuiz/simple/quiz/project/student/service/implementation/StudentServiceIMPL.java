@@ -37,4 +37,10 @@ public class StudentServiceIMPL implements StudentService {
         studentResponse.setStudentClass(savedStudent.getStudentClass());
         return studentResponse;
     }
+
+    @Override
+    public Student findStudentByStudentId(long studentId) {
+        return studentRepository.findById(studentId)
+    .orElseThrow(()-> new RuntimeException("Could not find student with the id  "+studentId));
+    }
 }

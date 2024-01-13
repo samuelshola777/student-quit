@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS quiz_result (
    quiz_time                            TIMESTAMP(6),
     submitted                           BOOLEAN,
     student_id                          BIGINT REFERENCES
-    students(id)                        ON DELETE SET NULL
+    student(id)                        ON DELETE SET NULL
     );
 
 CREATE TABLE IF NOT EXISTS quiz_wrong_question (
