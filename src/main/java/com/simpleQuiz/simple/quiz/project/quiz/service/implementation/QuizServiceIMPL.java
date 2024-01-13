@@ -61,7 +61,9 @@ public class QuizServiceIMPL implements QuizService {
         JS1Answers answer = listOfAnswer.get(questionIndex);
         if (answer != takeQuizRequest.getAnswer()) {
             foundQuizResult.setNumberOfWrongAnswer(foundQuizResult.getNumberOfWrongAnswer()+1);
+
             foundQuizResult.getListOfWrongQuestions().add(takeQuizRequest.getQuestion());
+
         } else {
             foundQuizResult.setNumberOfCorrectAnswer(foundQuizResult.getNumberOfCorrectAnswer()+1);
             correct = true;
