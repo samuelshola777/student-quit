@@ -10,4 +10,8 @@ public interface QuizService {
     QuizResult findById(long id);
 
     TakeQuizResponse studentAnswerQuestion(TakeQuizRequest takeQuizRequest);
+
+    void deleteStudentQuizResult(QuizResult foundQuizResult);
+
+    boolean deleteQuiz(long id);
 }

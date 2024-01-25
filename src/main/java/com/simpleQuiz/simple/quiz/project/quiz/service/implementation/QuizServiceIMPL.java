@@ -60,11 +60,14 @@ public class QuizServiceIMPL implements QuizService {
         List<JS1Answers> listOfAnswer = Arrays.asList(JS1Answers.values());
         JS1Answers answer = listOfAnswer.get(questionIndex);
         if (answer != takeQuizRequest.getAnswer()) {
+            log.info("i'm in the wrong method ****************************************************************************************************");
             foundQuizResult.setNumberOfWrongAnswer(foundQuizResult.getNumberOfWrongAnswer()+1);
 
             foundQuizResult.getListOfWrongQuestions().add(takeQuizRequest.getQuestion());
+            log.info( foundQuizResult.getListOfWrongQuestions()+ " <<<<< i'm in the wrong method ****************************************************************************************************");
 
         } else {
+            log.info("i'm in the right anwser method ****************************************************************************************************");
             foundQuizResult.setNumberOfCorrectAnswer(foundQuizResult.getNumberOfCorrectAnswer()+1);
             correct = true;
         }
@@ -85,6 +88,17 @@ public class QuizServiceIMPL implements QuizService {
         quizResponse.getListOfWrongQuestions().addAll(savedQuizResult.getListOfWrongQuestions());
         quizResponse.setCorrectAnswer(correct);
         return quizResponse;
+    }
+
+    @Override
+    public void deleteStudentQuizResult(QuizResult foundQuizResult) {
+       quizResultRepository.save(foundQuizResult);
+    }
+
+    @Override
+    public boolean deleteQuiz(long id) {
+        quizResultRepository.delete(findById(id));
+        return quizResultRepository.existsById(id);
     }
 
     private JS1Questions generateRandomQuestion(QuizResult quizResult) {

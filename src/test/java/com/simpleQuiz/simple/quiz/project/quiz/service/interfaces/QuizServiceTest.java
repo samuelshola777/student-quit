@@ -42,5 +42,10 @@ private  QuizService quizService;
 
     }
 
+    @Test
+    void deleteQuizById(){
+    assertFalse(quizService.deleteQuiz(1));
+    }
+
 
 }
