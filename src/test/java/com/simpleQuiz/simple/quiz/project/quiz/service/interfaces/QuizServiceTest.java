@@ -31,11 +31,11 @@ private  QuizService quizService;
     }
     @Test
     void testThatStudentCanAnswerQuizQuestion(){
-        takeQuizRequest.setQuizResultId(1);
-        takeQuizRequest.setStudentId(1);
+        takeQuizRequest.setQuizResultId(3);
+        takeQuizRequest.setStudentId(3);
         JS1Questions question =  quizService.setQuizQuestion(takeQuizRequest.getStudentId());
         takeQuizRequest.setQuestion(question);
-        takeQuizRequest.setAnswer(JS1Answers.ANSWER6);
+        takeQuizRequest.setAnswer(JS1Answers.ANSWER2);
         TakeQuizResponse takeQuizResponse = quizService.studentAnswerQuestion(takeQuizRequest);
         assertTrue(takeQuizResponse.isCorrectAnswer());
 
@@ -45,6 +45,10 @@ private  QuizService quizService;
     @Test
     void deleteQuizById(){
     assertFalse(quizService.deleteQuiz(1));
+    }
+    @Test
+    void deleteAllQuestionsAskedByQuiz(){
+        assertEquals(0, quizService.deleteAllQuestionsAskedByQuizId(3));
     }
 
 

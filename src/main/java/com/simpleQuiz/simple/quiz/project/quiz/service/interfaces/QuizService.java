@@ -14,4 +14,6 @@ public interface QuizService {
     void deleteStudentQuizResult(QuizResult foundQuizResult);
 
     boolean deleteQuiz(long id);
+
+    int deleteAllQuestionsAskedByQuizId(long id);
 }

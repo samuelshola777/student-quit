@@ -26,7 +26,6 @@ public class QuizServiceIMPL implements QuizService {
     private final StudentService studentService;
     private final QuizResultRepository quizResultRepository;
     private SecureRandom secureRandom = new SecureRandom();
-
     @Override
     public JS1Questions setQuizQuestion(long studentId) {
         QuizResult foundQuizResult = quizResultRepository.findByStudentIdAndSubmittedFalse(studentId);
@@ -55,26 +54,27 @@ public class QuizServiceIMPL implements QuizService {
             throw new RuntimeException("student with the id  >> " + takeQuizRequest.getStudentId() + "  <<< doesn't have quiz section");
         if (!foundQuizResult.getListOfQuestionsAsked().contains(takeQuizRequest.getQuestion()))
             throw new RuntimeException("the question  >> " + takeQuizRequest.getQuestion() + "  <<< is not recognized");
+        if (foundQuizResult.getNumberOfCorrectAnswer() + foundQuizResult.getNumberOfWrongAnswer() == 10) {
+            QuizResult foundQuiz = findById(foundQuizResult.getId());
+            if (foundQuiz.getNumberOfCorrectAnswer()+ foundQuiz.getNumberOfWrongAnswer()== 10){
+                foundQuizResult.setSubmitted(true);
+                throw new RuntimeException("please submit your  quiz");
+            }
+        }
         List<JS1Questions> listOfQuestion = Arrays.asList(JS1Questions.values());
         int questionIndex = listOfQuestion.indexOf(takeQuizRequest.getQuestion());
         List<JS1Answers> listOfAnswer = Arrays.asList(JS1Answers.values());
         JS1Answers answer = listOfAnswer.get(questionIndex);
         if (answer != takeQuizRequest.getAnswer()) {
-            log.info("i'm in the wrong method ****************************************************************************************************");
             foundQuizResult.setNumberOfWrongAnswer(foundQuizResult.getNumberOfWrongAnswer()+1);
 
             foundQuizResult.getListOfWrongQuestions().add(takeQuizRequest.getQuestion());
-            log.info( foundQuizResult.getListOfWrongQuestions()+ " <<<<< i'm in the wrong method ****************************************************************************************************");
 
         } else {
-            log.info("i'm in the right anwser method ****************************************************************************************************");
             foundQuizResult.setNumberOfCorrectAnswer(foundQuizResult.getNumberOfCorrectAnswer()+1);
             correct = true;
         }
-        if (foundQuizResult.getNumberOfCorrectAnswer() + foundQuizResult.getNumberOfWrongAnswer() == 10) {
-            foundQuizResult.setSubmitted(true);
-            throw new RuntimeException("please submit your  quiz");
-        }
+
         QuizResult savedQuizResult = quizResultRepository.save(foundQuizResult);
         TakeQuizResponse quizResponse = new TakeQuizResponse();
         quizResponse.setQuestion(takeQuizRequest.getQuestion().getQuestion());
@@ -99,6 +99,13 @@ public class QuizServiceIMPL implements QuizService {
     public boolean deleteQuiz(long id) {
         quizResultRepository.delete(findById(id));
         return quizResultRepository.existsById(id);
+    }
+
+    @Override
+    public int deleteAllQuestionsAskedByQuizId(long id) {
+        QuizResult quiz = findById(id);
+        quiz.getListOfQuestionsAsked().removeAll(quiz.getListOfQuestionsAsked());
+        return quiz.getListOfQuestionsAsked().size();
     }
 
     private JS1Questions generateRandomQuestion(QuizResult quizResult) {
