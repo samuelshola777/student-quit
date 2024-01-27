@@ -29,6 +29,7 @@ public class ResultServiceIMPL implements ResultService {
     public StudentResult markStudentQuiz(long studentId, long quizId) {
         QuizResult foundQuizResult = quizService.findById(quizId);
         Student foundStudent = foundQuizResult.getStudent();
+        if (foundQuizResult.getNumberOfCorrectAnswer()+ foundQuizResult.getNumberOfWrongAnswer() != 10) throw new RuntimeException("please complete the quiz before submission");
         if (foundQuizResult.getStudent().getId() != studentId) throw new RuntimeException("there's a mismatch between the student and the quiz");
         if (studentResultRepository.existsByStudent_EmailAndStudentClass(foundStudent.getEmail(), foundStudent.getStudentClass()))
             throw new RuntimeException("student can't have more than one of "+foundStudent.getStudentClass()+" quiz result");

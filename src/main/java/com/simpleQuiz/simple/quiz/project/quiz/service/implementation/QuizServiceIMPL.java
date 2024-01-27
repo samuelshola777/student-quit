@@ -92,7 +92,7 @@ public class QuizServiceIMPL implements QuizService {
 
     @Override
     public void deleteStudentQuizResult(QuizResult foundQuizResult) {
-       quizResultRepository.save(foundQuizResult);
+       quizResultRepository.delete(foundQuizResult);
     }
 
     @Override
