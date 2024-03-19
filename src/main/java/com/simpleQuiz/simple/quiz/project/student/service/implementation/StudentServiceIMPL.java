@@ -9,7 +9,11 @@ import com.simpleQuiz.simple.quiz.project.student.service.interfaces.StudentServ
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 
@@ -19,9 +23,19 @@ import java.time.LocalDateTime;
 @Transactional
 public class StudentServiceIMPL implements StudentService {
     private final StudentRepository studentRepository;
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final HttpHeaders httpHeaders = new HttpHeaders();
+
+    @Value("${QuiID}")
+    private String quok;
+
+    @Value("${QuiKey}")
+    private String quokey;
+
     @Override
     public StudentResponse registerNewStudent(StudentRequest studentRequest4) {
-        if ( studentRepository.existsByEmail(studentRequest4.getEmail()))throw new RuntimeException("Student already exists");
+        if (studentRepository.existsByEmail(studentRequest4.getEmail()))
+            throw new RuntimeException("Student already exists");
         Student student = new Student();
         student.setEmail(studentRequest4.getEmail());
         student.setStudentClass(StudentClass.JS1);
@@ -41,6 +55,7 @@ public class StudentServiceIMPL implements StudentService {
     @Override
     public Student findStudentByStudentId(long studentId) {
         return studentRepository.findById(studentId)
-    .orElseThrow(()-> new RuntimeException("Could not find student with the id  "+studentId));
+                .orElseThrow(() -> new RuntimeException("Could not find student with the id  " + studentId));
     }
+
 }

@@ -32,6 +32,24 @@ public class quizController {
             return    ControllerResponseHandler.responseBuilder("question was not answered successfully", HttpStatus.BAD_REQUEST );
         }
     }
+    @DeleteMapping("deleteAllQuestionsAskedByQuizI")
+    public ResponseEntity<Object> deleteAllQuestionsAskedByQuizI(@RequestParam long  quizId){
+        try{
+            return     ControllerResponseHandler.responseBuilder("questions deleted successfully", HttpStatus.CREATED,service.deleteAllQuestionsAskedByQuizId(quizId) );
+        }catch (Exception e){
+            return    ControllerResponseHandler.responseBuilder("questions was not deleted successfully", HttpStatus.BAD_REQUEST );
+        }
+
+    }
+    @DeleteMapping("deleteQuiz")
+    public ResponseEntity<?> deleteQuiz(@RequestParam long quizId){
+        try{
+            return     ControllerResponseHandler.responseBuilder("quiz deleted successfully", HttpStatus.CREATED,service.deleteQuiz(quizId) );
+        }catch (Exception e){
+            return    ControllerResponseHandler.responseBuilder("question was not deleted successfully", HttpStatus.BAD_REQUEST );
+        }
+            }
+
 
 
 }

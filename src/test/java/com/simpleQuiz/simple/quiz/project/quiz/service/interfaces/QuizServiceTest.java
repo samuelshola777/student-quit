@@ -27,6 +27,7 @@ private  QuizService quizService;
     void testThatStudentCanSetQuestionFOrStudent(){
    JS1Questions question =  quizService.setQuizQuestion(takeQuizRequest.getStudentId());
     assertEquals("tcttbyhvy", question.getQuestion());
+    
 
     }
     @Test
